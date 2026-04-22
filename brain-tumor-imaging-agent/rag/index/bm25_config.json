@@ -1,0 +1,9 @@
+{
+  "chunks_path": "/root/code/agent1/rag/index/chunks.json",
+  "output_dir": "/root/code/agent1/rag/index",
+  "num_docs": 33,
+  "avgdl": 93.0909090909091,
+  "k1": 1.5,
+  "b": 0.75,
+  "tokenizer": "jieba"
+}
