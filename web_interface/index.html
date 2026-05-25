@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BratsAgent - 脑肿瘤影像辅助诊断Agent</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="brainwave-container">
+        <div class="neural-grid">
+            <div class="neural-line"></div>
+            <div class="neural-line"></div>
+            <div class="neural-line"></div>
+            <div class="neural-line"></div>
+            <div class="neural-line"></div>
+            <div class="neural-line"></div>
+            <div class="neural-line"></div>
+        </div>
+    </div>
+    <div class="neural-network"></div>
+
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-bg-effects">
+            <div class="hex-grid"></div>
+            <div class="scan-line"></div>
+            <div class="circuit-lines">
+                <div class="circuit-line"></div>
+                <div class="circuit-line"></div>
+                <div class="circuit-line"></div>
+                <div class="circuit-line"></div>
+            </div>
+        </div>
+        <div class="splash-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="splash-content">
+            <div class="ai-core">
+                <div class="ai-ring ring-1"></div>
+                <div class="ai-ring ring-2"></div>
+                <div class="ai-ring ring-3"></div>
+                <div class="splash-brain">
+                    <svg viewBox="0 0 120 100" fill="none">
+                        <defs>
+                            <linearGradient id="splashBrainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#38BDF8;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <path d="M60 5 C30 5 15 25 15 50 C15 70 30 85 45 90 C35 95 40 100 60 100 C80 100 85 95 75 90 C90 85 105 70 105 50 C105 25 90 5 60 5"
+                              fill="none" stroke="url(#splashBrainGrad)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+                        <path d="M30 35 Q50 45 60 35 Q70 45 90 35" 
+                              fill="none" stroke="url(#splashBrainGrad)" stroke-width="2" opacity="0.8"/>
+                        <path d="M25 50 Q50 62 75 50 Q85 60 95 50" 
+                              fill="none" stroke="url(#splashBrainGrad)" stroke-width="2" opacity="0.7"/>
+                        <path d="M30 65 Q50 75 60 65 Q70 75 90 65" 
+                              fill="none" stroke="url(#splashBrainGrad)" stroke-width="2" opacity="0.6"/>
+                        <circle cx="45" cy="48" r="4" fill="#38BDF8" filter="url(#glow)">
+                            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+                            <animate attributeName="r" values="3;5;3" dur="1.5s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="75" cy="48" r="4" fill="#8B5CF6" filter="url(#glow)">
+                            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" begin="0.3s"/>
+                            <animate attributeName="r" values="3;5;3" dur="1.5s" repeatCount="indefinite" begin="0.3s"/>
+                        </circle>
+                        <circle cx="60" cy="58" r="6" fill="#38BDF8" filter="url(#glow)">
+                            <animate attributeName="r" values="4;8;4" dur="2s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="35" cy="60" r="2.5" fill="#22D3EE">
+                            <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="85" cy="55" r="2.5" fill="#A855F7">
+                            <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite" begin="0.5s"/>
+                        </circle>
+                        <circle cx="50" cy="75" r="2" fill="#38BDF8">
+                            <animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" repeatCount="indefinite" begin="0.2s"/>
+                        </circle>
+                        <circle cx="70" cy="72" r="2" fill="#8B5CF6">
+                            <animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" repeatCount="indefinite" begin="0.7s"/>
+                        </circle>
+                    </svg>
+                </div>
+                <div class="data-flow">
+                    <div class="data-dot"></div>
+                    <div class="data-dot"></div>
+                    <div class="data-dot"></div>
+                </div>
+            </div>
+            <div class="splash-title">
+                <h1>BratsAgent</h1>
+                <div class="title-tagline">
+                    <span class="tag">AI</span>
+                    <span class="separator">|</span>
+                    <span>脑肿瘤影像辅助诊断Agent</span>
+                    <span class="separator">|</span>
+                    <span class="tag">v2.0</span>
+                </div>
+            </div>
+            <div class="tech-loader">
+                <div class="loader-bar">
+                    <div class="loader-progress"></div>
+                </div>
+                <div class="loader-text">系统初始化中<span class="dots"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="brain-icon">
+                    <svg viewBox="0 0 64 64" class="brain-svg">
+                        <defs>
+                            <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#40C4FF;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#7C4DFF;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M32 8 C18 8 8 18 8 32 C8 42 14 52 22 56 C18 60 22 64 32 64 C42 64 46 60 42 56 C50 52 56 42 56 32 C56 18 46 8 32 8"
+                              fill="none" stroke="url(#brainGrad)" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M18 20 Q24 24 32 18 Q40 24 46 20" 
+                              fill="none" stroke="url(#brainGrad)" stroke-width="1.5" opacity="0.7"/>
+                        <path d="M14 26 Q24 32 32 26 Q40 32 50 26" 
+                              fill="none" stroke="url(#brainGrad)" stroke-width="1.5" opacity="0.6"/>
+                        <path d="M12 34 Q24 42 32 34 Q40 42 52 34" 
+                              fill="none" stroke="url(#brainGrad)" stroke-width="1.5" opacity="0.6"/>
+                        <path d="M16 42 Q26 48 32 42 Q38 48 48 42" 
+                              fill="none" stroke="url(#brainGrad)" stroke-width="1.5" opacity="0.5"/>
+                        <path d="M22 24 Q32 28 42 24" 
+                              fill="none" stroke="url(#brainGrad)" stroke-width="1" opacity="0.5"/>
+                        <path d="M20 32 Q32 36 44 32" 
+                              fill="none" stroke="url(#brainGrad)" stroke-width="1" opacity="0.5"/>
+                        <path d="M22 40 Q32 44 42 40" 
+                              fill="none" stroke="url(#brainGrad)" stroke-width="1" opacity="0.4"/>
+                        <circle cx="24" cy="30" r="2" fill="#40C4FF" opacity="0.8"/>
+                        <circle cx="40" cy="30" r="2" fill="#7C4DFF" opacity="0.8"/>
+                        <circle cx="32" cy="36" r="2.5" fill="#18FFFF" opacity="0.9"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>BratsAgent</h1>
+                    <p class="subtitle">脑肿瘤影像辅助诊断Agent</p>
+                </div>
+            </div>
+            <div class="status-bar">
+                <div class="status-item" id="patientStatus">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">就绪</span>
+                </div>
+                <div class="status-divider"></div>
+                <div class="status-item">
+                    <span class="status-label">患者ID</span>
+                    <span id="currentPatientId" class="status-value">--</span>
+                </div>
+                <div class="status-divider"></div>
+                <div class="status-item">
+                    <span class="status-label">切片</span>
+                    <span id="sliceCount" class="status-value">0 / 0</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="upload-section section-card">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+                <div class="tech-line tech-line-left"></div>
+                <div class="tech-line tech-line-right"></div>
+                <div class="tech-line tech-line-bottom"></div>
+                <div class="corner-outer outer-tl"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="corner-outer outer-tr"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="corner-outer outer-bl"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="corner-outer outer-br"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="screen-line screen-line-top"></div>
+                <div class="screen-line screen-line-bottom"></div>
+                <div class="screen-line screen-line-left"></div>
+                <div class="screen-line screen-line-right"></div>
+                <div class="screen-dot screen-dot-1"></div>
+                <div class="screen-dot screen-dot-2"></div>
+                <div class="screen-dot screen-dot-3"></div>
+                <div class="screen-dot screen-dot-4"></div>
+                <div class="data-pulse data-pulse-top"></div>
+                <div class="data-pulse data-pulse-bottom"></div>
+                <div class="connector-line connector-left"></div>
+                <div class="connector-line connector-right"></div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" class="section-icon" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <h2>上传多模态MRI</h2>
+                    </div>
+                    <div class="patient-id-input">
+                        <svg viewBox="0 0 24 24" class="input-icon" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <input type="text" id="patientIdInput" placeholder="患者ID (如 P001)" maxlength="7">
+                    </div>
+                </div>
+                <div class="upload-grid">
+                    <div class="upload-card" data-modality="t1">
+                        <div class="upload-zone" id="dropT1">
+                            <div class="upload-icon-wrap">
+                                <svg viewBox="0 0 48 48" class="upload-icon" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="24" cy="24" r="16"/>
+                                    <path d="M24 8 L24 40 M8 24 L40 24" stroke-dasharray="3 3"/>
+                                    <circle cx="24" cy="24" r="6"/>
+                                    <circle cx="24" cy="24" r="2" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="upload-label">T1</div>
+                            <div class="upload-hint">T1加权成像</div>
+                            <div class="upload-check"></div>
+                            <input type="file" class="file-input" id="fileT1" accept=".nii,.nii.gz">
+                        </div>
+                    </div>
+                    <div class="upload-card" data-modality="flair">
+                        <div class="upload-zone" id="dropFlair">
+                            <div class="upload-icon-wrap">
+                                <svg viewBox="0 0 48 48" class="upload-icon" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="24" cy="24" r="16"/>
+                                    <path d="M14 14 Q24 24 34 14 M14 34 Q24 24 34 34" stroke-dasharray="4 2"/>
+                                    <circle cx="24" cy="24" r="8"/>
+                                </svg>
+                            </div>
+                            <div class="upload-label">FLAIR</div>
+                            <div class="upload-hint">液体抑制成像</div>
+                            <div class="upload-check"></div>
+                            <input type="file" class="file-input" id="fileFlair" accept=".nii,.nii.gz">
+                        </div>
+                    </div>
+                    <div class="upload-card" data-modality="t1ce">
+                        <div class="upload-zone" id="dropT1ce">
+                            <div class="upload-icon-wrap">
+                                <svg viewBox="0 0 48 48" class="upload-icon" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="24" cy="24" r="16"/>
+                                    <circle cx="24" cy="24" r="10"/>
+                                    <circle cx="24" cy="24" r="4" fill="currentColor"/>
+                                    <path d="M24 4 L24 12 M24 36 L24 44 M4 24 L12 24 M36 24 L44 24"/>
+                                </svg>
+                            </div>
+                            <div class="upload-label">T1CE</div>
+                            <div class="upload-hint">增强扫描</div>
+                            <div class="upload-check"></div>
+                            <input type="file" class="file-input" id="fileT1ce" accept=".nii,.nii.gz">
+                        </div>
+                    </div>
+                    <div class="upload-card" data-modality="t2">
+                        <div class="upload-zone" id="dropT2">
+                            <div class="upload-icon-wrap">
+                                <svg viewBox="0 0 48 48" class="upload-icon" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="24" cy="24" r="16"/>
+                                    <path d="M12 12 Q24 24 36 12 M12 36 Q24 24 36 36"/>
+                                    <circle cx="24" cy="24" r="8"/>
+                                </svg>
+                            </div>
+                            <div class="upload-label">T2</div>
+                            <div class="upload-hint">T2加权成像</div>
+                            <div class="upload-check"></div>
+                            <input type="file" class="file-input" id="fileT2" accept=".nii,.nii.gz">
+                        </div>
+                    </div>
+                </div>
+                <div class="upload-actions">
+                    <button class="btn btn-primary" id="uploadBtn" disabled>
+                        <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <span class="btn-text">上传模态</span>
+                    </button>
+                </div>
+                <div class="upload-message" id="uploadMessage"></div>
+            </section>
+
+            <section class="visualization-section section-card">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+                <div class="tech-line tech-line-left"></div>
+                <div class="tech-line tech-line-right"></div>
+                <div class="tech-line tech-line-bottom"></div>
+                <div class="corner-outer outer-tl"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="corner-outer outer-tr"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="corner-outer outer-bl"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="corner-outer outer-br"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="screen-line screen-line-top"></div>
+                <div class="screen-line screen-line-bottom"></div>
+                <div class="screen-line screen-line-left"></div>
+                <div class="screen-line screen-line-right"></div>
+                <div class="screen-dot screen-dot-1"></div>
+                <div class="screen-dot screen-dot-2"></div>
+                <div class="screen-dot screen-dot-3"></div>
+                <div class="screen-dot screen-dot-4"></div>
+                <div class="data-pulse data-pulse-top"></div>
+                <div class="data-pulse data-pulse-bottom"></div>
+                <div class="connector-line connector-left"></div>
+                <div class="connector-line connector-right"></div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" class="section-icon" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <h2>分割结果查看器</h2>
+                    </div>
+                    <div class="view-controls">
+                        <div class="view-toggle">
+                            <button class="toggle-btn active" data-mode="overlay">叠加视图</button>
+                            <button class="toggle-btn" data-mode="flair">FLAIR</button>
+                        </div>
+                        <button class="btn btn-secondary" id="downloadBtn" disabled>
+                            <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            <span>下载NIfTI</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="viewer-container">
+                    <div class="viewer-placeholder" id="viewerPlaceholder">
+                        <div class="placeholder-content">
+                            <svg viewBox="0 0 80 80" class="placeholder-brain" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M40 12 C28 12 18 24 18 38 C18 48 24 56 32 60 C26 66 32 72 40 72 C48 72 54 66 48 60 C56 56 62 48 62 38 C62 24 52 12 40 12"/>
+                                <path d="M26 28 Q40 34 54 28 M24 40 Q40 46 56 40 M26 52 Q40 58 54 52" opacity="0.5"/>
+                            </svg>
+                            <p>上传模态数据以开始分析</p>
+                        </div>
+                    </div>
+                    <canvas id="sliceCanvas" class="slice-canvas hidden"></canvas>
+                    <div class="loading-overlay hidden" id="loadingOverlay">
+                        <div class="loader">
+                            <div class="loader-ring"></div>
+                            <span>分析中...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slice-control hidden" id="sliceControl">
+                    <div class="slice-nav">
+                        <button class="nav-btn" id="prevSlice">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15 18 9 12 15 6"/>
+                            </svg>
+                        </button>
+                        <div class="slice-slider-container">
+                            <input type="range" id="sliceSlider" min="0" max="100" value="0">
+                            <div class="slice-info">
+                                <span class="slice-label">切片</span>
+                                <span id="currentSlice" class="slice-current">0</span>
+                                <span class="slice-divider">/</span>
+                                <span id="totalSlices" class="slice-total">0</span>
+                            </div>
+                        </div>
+                        <button class="nav-btn" id="nextSlice">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="control-row">
+                        <div class="alpha-control">
+                            <label>不透明度</label>
+                            <input type="range" id="alphaSlider" min="0" max="100" value="40">
+                            <span id="alphaValue">40%</span>
+                        </div>
+                        <div class="legend">
+                            <div class="legend-item">
+                                <span class="color-box tc"></span>
+                                <span>全肿瘤</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="color-box et"></span>
+                                <span>增强肿瘤</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="color-box wt"></span>
+                                <span>肿瘤核心</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="chat-section section-card">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+                <div class="tech-line tech-line-left"></div>
+                <div class="tech-line tech-line-right"></div>
+                <div class="tech-line tech-line-bottom"></div>
+                <div class="corner-outer outer-tl"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="corner-outer outer-tr"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="corner-outer outer-bl"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="corner-outer outer-br"><div class="corner-outer-line-h"></div><div class="corner-outer-line-v"></div></div>
+                <div class="screen-line screen-line-top"></div>
+                <div class="screen-line screen-line-bottom"></div>
+                <div class="screen-line screen-line-left"></div>
+                <div class="screen-line screen-line-right"></div>
+                <div class="screen-dot screen-dot-1"></div>
+                <div class="screen-dot screen-dot-2"></div>
+                <div class="screen-dot screen-dot-3"></div>
+                <div class="screen-dot screen-dot-4"></div>
+                <div class="data-pulse data-pulse-top"></div>
+                <div class="data-pulse data-pulse-bottom"></div>
+                <div class="connector-line connector-left"></div>
+                <div class="connector-line connector-right"></div>
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" class="section-icon" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        <h2>智能助手</h2>
+                    </div>
+                    <button class="btn btn-tertiary" id="clearChat">
+                        <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                        <span>清空对话</span>
+                    </button>
+                </div>
+                <div class="chat-container" id="chatContainer">
+                    <div class="chat-welcome">
+                        <div class="welcome-icon">
+                            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="32" cy="32" r="24" stroke-dasharray="6 3" opacity="0.4"/>
+                                <path d="M32 12 C22 12 14 22 14 32 C14 40 18 48 24 52 C20 58 24 62 32 62 C40 62 44 58 40 52 C46 48 50 40 50 32 C50 22 42 12 32 12"/>
+                                <path d="M22 22 Q32 28 42 22 M20 32 Q32 38 44 32 M22 42 Q32 48 42 42" opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <h3>欢迎使用 BratsAgent</h3>
+                        <p>我是您的脑肿瘤影像辅助诊断助手。上传MRI模态数据后，我可以帮您完成：</p>
+                        <div class="welcome-features">
+                            <div class="feature-section">
+                                <h4>🔬 核心功能</h4>
+                                <ul>
+                                    <li>3D脑肿瘤分割分析</li>
+                                    <li>肿瘤体积精确测量</li>
+                                    <li>分割结果可视化展示</li>
+                                </ul>
+                            </div>
+                            <div class="feature-section">
+                                <h4>📊 分析解读</h4>
+                                <ul>
+                                    <li>分割结果专业解读</li>
+                                    <li>肿瘤变化趋势分析</li>
+                                    <li>生成结构化诊断报告</li>
+                                </ul>
+                            </div>
+                            <div class="feature-section">
+                                <h4>💡 知识问答</h4>
+                                <ul>
+                                    <li>ET/TC/WT标签含义解释</li>
+                                    <li>脑肿瘤常见治疗方案</li>
+                                    <li>相关医学知识查询</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="welcome-tips">
+                            <p><strong>💡 快速开始：</strong></p>
+                            <p>1. 在左侧上传四个MRI模态文件（T1、FLAIR、T1CE、T2）</p>
+                            <p>2. 在下方输入框中输入指令，例如："请进行脑肿瘤三维分割"</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <div class="quick-questions" id="quickQuestions">
+                        <button class="quick-btn" data-question="请进行脑肿瘤三维分割">分割分析</button>
+                        <button class="quick-btn" data-question="帮我分析肿瘤体积">体积分析</button>
+                        <button class="quick-btn" data-question="请生成一份结构化报告">生成报告</button>
+                        <button class="quick-btn" data-question="帮我解释一下分割结果">结果解释</button>
+                        <button class="quick-btn" data-question="帮我分析一下肿瘤变化">变化分析</button>
+                        <button class="quick-btn" data-question="脑肿瘤常见治疗方案有哪些">治疗方案</button>
+                    </div>
+                    <div class="chat-input-wrapper">
+                        <textarea id="chatInput" placeholder="输入您的分析指令，例如：执行脑肿瘤分割" rows="1"></textarea>
+                        <button class="send-btn" id="sendBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"/>
+                                <polygon points="22 2 15 22 11 13 2 9"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+<script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('splashScreen').classList.add('fade-out');
+                document.body.classList.add('loaded');
+            }, 3500);
+        });
+    </script>
+</body>
+</html>
