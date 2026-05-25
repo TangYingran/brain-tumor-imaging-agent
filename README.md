@@ -6,6 +6,8 @@
 
 ![](./photo/homepage.png)
 
+![](./photo/seg.png)
+
 #### 常用提问方式
 
 - 请进行脑肿瘤三维分割
